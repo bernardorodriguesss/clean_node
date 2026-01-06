@@ -1,0 +1,19 @@
+{
+	"$schema": "https://www.schemastore.org/tsconfig",
+	"_version": "22.0.0",
+
+	"compilerOptions": {
+		"lib": ["DOM", "es2022", "ESNext.Array", "ESNext.Collection"],
+		"target": "es2022",
+		"module": "nodenext",
+
+		"strict": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"moduleResolution": "node16",
+
+		"paths": {
+			"@/*": ["./*"]
+		}
+	}
+}
