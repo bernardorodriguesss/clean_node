@@ -11,7 +11,7 @@ describe('CreateUserUseCase', () => {
 	beforeEach(async () => {
 		repository = new FakeUserRepository();
 		sut = new GetUserUseCase(repository);
-		await repository.createUser(
+		await repository.create(
 			makeUser({ id: 'fake_id', email: 'fake_email@email.com' }),
 		);
 	});

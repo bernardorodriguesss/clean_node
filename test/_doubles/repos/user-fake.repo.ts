@@ -1,20 +1,22 @@
-import { User } from '@/src/user/domain/user';
-import { IUserRepository } from '@/src/user/domain/user-interface.repo';
+import { IUserRepository } from '@/src/user/database/user-interface.repo';
+import { User, UserRole } from '@/src/user/domain/user';
 
 export class FakeUserRepository implements IUserRepository {
 	public users: User[] = [];
 
-	async createUser(input: User): Promise<User> {
+	async create(input: User): Promise<User> {
 		const user = input;
 		this.users.push(user);
 		return user;
 	}
 
-	async findUser(id: string): Promise<User | null> {
-		return this.users.find((user) => user.id === id) || null;
+	async findOne(id: string): Promise<User | null> {
+		const user = this.users.find((user) => user.id === id);
+		return user ?? null;
 	}
 
 	async findUserByEmail(email: string): Promise<User | null> {
-		return this.users.find((user) => user.email === email) || null;
+		const user = this.users.find((user) => user.email === email);
+		return user ?? null;
 	}
 }

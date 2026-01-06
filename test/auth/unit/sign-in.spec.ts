@@ -14,7 +14,7 @@ describe('SignInUseCase', () => {
 		repository = new FakeUserRepository();
 		sut = new SignInUseCase(repository);
 
-		await repository.createUser(
+		await repository.create(
 			makeUser({
 				email: 'fake_email@email.com',
 				password_hash: await hashPassword('1'),

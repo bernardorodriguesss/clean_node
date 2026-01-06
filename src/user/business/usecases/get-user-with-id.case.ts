@@ -4,7 +4,7 @@ import { ModelId } from '@/src/_lib/schemas';
 import { NotFound } from '@/src/_lib/errors';
 
 import { UserResponseDTO } from '../dto/user.dto';
-import { IUserRepository } from '../../domain/user-interface.repo';
+import { IUserRepository } from '../../database/user-interface.repo';
 
 type Response = Either<NotFound, UserResponseDTO>;
 
@@ -12,7 +12,7 @@ export class GetUserUseCase implements UseCase<ModelId, Response> {
 	constructor(private repository: IUserRepository) {}
 
 	async execute(input: ModelId): Promise<Response> {
-		const user = await this.repository.findUser(input.id);
+		const user = await this.repository.findOne(input.id);
 
 		if (!user) {
 			return failure(new NotFound('User not found'));

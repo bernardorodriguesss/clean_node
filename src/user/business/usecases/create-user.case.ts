@@ -3,7 +3,7 @@ import { UseCase } from '@/src/_lib/protocols/case';
 import { Conflict } from '@/src/_lib/errors';
 
 import { UserRole } from '../../domain/user';
-import { IUserRepository } from '../../domain/user-interface.repo';
+import { IUserRepository } from '../../database/user-interface.repo';
 import { generateId, hashPassword } from '@/src/_lib/functions/secure';
 import { CreateUserDTO, UserResponseDTO } from '../dto/user.dto';
 
@@ -22,7 +22,7 @@ export class CreateUserUseCase implements UseCase<CreateUserDTO, Response> {
 		const userId = generateId();
 		const hashedPassword = await hashPassword(input.password);
 
-		const user = await this.repository.createUser({
+		const user = await this.repository.create({
 			id: userId,
 			name: input.name,
 			email: input.email,
