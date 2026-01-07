@@ -7,3 +7,5 @@ export const db = new Kysely<Database>({
 		pool: new Pool({ connectionString: process.env.DATABASE_URL }),
 	}),
 });
+
+export type DbContext = Kysely<Database>;
