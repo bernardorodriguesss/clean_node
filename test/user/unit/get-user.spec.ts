@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { FakeUserRepository } from '@/test/_doubles/repos/user-fake.repo';
-import { GetUserUseCase } from '@/src/user/business/usecases/get-user-with-id.case';
+import { GetUserUseCase } from '@/src/user/business/usecases/get-user.case';
 import { NotFound } from '@/src/_lib/errors';
 import { makeUser } from '../utils/make-user';
 

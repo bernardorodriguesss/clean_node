@@ -1,9 +1,9 @@
 import { Controller } from '@/src/_lib/protocols/controller';
 import { IHttpContext } from '@/src/_infra/http/context';
-import { GetUserUseCase } from '../../business/usecases/get-user-with-id.case';
+import { GetUserUseCase } from '../../business/usecases/get-user.case';
 import { ok, unauthorized } from '@/src/_infra/http/helpers';
 
-export class GetUserProfile implements Controller {
+export class GetUserProfileController implements Controller {
 	constructor(private getUserUseCase: GetUserUseCase) {}
 
 	async handle(ctx: IHttpContext): Promise<void> {
