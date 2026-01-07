@@ -1,7 +1,7 @@
 import { User } from '../domain/user';
 import { DbContext, db } from '@/src/_infra/db';
 import { IUserRepository } from './user-interface.repo';
-import { BaseDbRepository } from '@/src/_lib/database/db-base.repo';
+import { BaseDbRepository } from '@/src/_infra/db/db-base.repo';
 
 export class UserRepository
 	extends BaseDbRepository<User>

@@ -1,5 +1,5 @@
 import { InsertObject } from 'kysely';
-import { Repository } from '../protocols/repo';
+import { Repository } from '../../_lib/protocols/repo';
 import { DbContext } from '@/src/_infra/db';
 import { Database } from '@/src/_infra/db/schemas';
 

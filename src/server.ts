@@ -1,6 +1,8 @@
-import { fastify } from 'fastify';
+import fastify from 'fastify';
 import swagger from '@fastify/swagger';
 import openapi from '../_docs/openapi';
+
+import { AuthRoutes } from './auth/interface/auth-routes';
 import { UserRoutes } from './user/interface/user-routes';
 
 export const app = fastify({
@@ -28,6 +30,7 @@ app.register(import('@scalar/fastify-api-reference'), {
 });
 
 app.register(UserRoutes);
+app.register(AuthRoutes);
 
 app.listen({ port: 3000, host: '0.0.0.0' }, (err, address) => {
 	if (err) {
