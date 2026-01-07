@@ -4,7 +4,7 @@ import { ModelId } from '@/src/_lib/schemas';
 import { NotFound } from '@/src/_lib/errors';
 
 import { UserResponseDTO } from '../dto/user.dto';
-import { IUserRepository } from '../../database/user-interface.repo';
+import { IUserRepository } from '../../repos/user-interface.repo';
 
 type Response = Either<NotFound, UserResponseDTO>;
 

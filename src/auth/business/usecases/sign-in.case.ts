@@ -2,7 +2,7 @@ import { Either, failure, success } from '@/src/_lib/either';
 import { UseCase } from '@/src/_lib/protocols/case';
 import { Unauthorized } from '@/src/_lib/errors';
 
-import { IUserRepository } from '@/src/user/database/user-interface.repo';
+import { IUserRepository } from '@/src/user/repos/user-interface.repo';
 import { SignInDTO, SignInResponseDTO } from '../dto/sign-in.dto';
 import {
 	HASH_DUMMY,

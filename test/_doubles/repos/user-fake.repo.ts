@@ -1,5 +1,5 @@
-import { IUserRepository } from '@/src/user/database/user-interface.repo';
-import { User, UserRole } from '@/src/user/domain/user';
+import { IUserRepository } from '@/src/user/repos/user-interface.repo';
+import { User } from '@/src/user/domain/user';
 
 export class FakeUserRepository implements IUserRepository {
 	public users: User[] = [];

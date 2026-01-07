@@ -3,7 +3,7 @@ import { UseCase } from '@/src/_lib/protocols/case';
 import { Conflict } from '@/src/_lib/errors';
 
 import { UserRole } from '../../domain/user';
-import { IUserRepository } from '../../database/user-interface.repo';
+import { IUserRepository } from '../../repos/user-interface.repo';
 import { generateId, hashPassword } from '@/src/_lib/functions/secure';
 import { CreateUserDTO, UserResponseDTO } from '../dto/user.dto';
 
