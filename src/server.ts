@@ -1,4 +1,6 @@
 import { fastify } from 'fastify';
+import swagger from '@fastify/swagger';
+import openapi from '../_docs/openapi';
 import { UserRoutes } from './user/interface/user-routes';
 
 export const app = fastify({
@@ -10,6 +12,21 @@ export const app = fastify({
 	},
 });
 
+// Swagger configuration
+app.register(swagger, {
+	mode: 'static',
+	specification: {
+		document: openapi,
+	},
+});
+
+app.register(import('@scalar/fastify-api-reference'), {
+	routePrefix: '/docs',
+	configuration: {
+		theme: 'elysiajs',
+	},
+});
+
 app.register(UserRoutes);
 
 app.listen({ port: 3000, host: '0.0.0.0' }, (err, address) => {
@@ -17,4 +34,6 @@ app.listen({ port: 3000, host: '0.0.0.0' }, (err, address) => {
 		app.log.error(err);
 		process.exit(1);
 	}
+
+	app.log.info(`Swagger listening at ${address}/docs`);
 });
