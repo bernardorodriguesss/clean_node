@@ -1,4 +1,5 @@
 import { fastify } from 'fastify';
+import { UserRoutes } from './user/interface/user-routes';
 
 export const app = fastify({
 	logger: {
@@ -8,6 +9,8 @@ export const app = fastify({
 		},
 	},
 });
+
+app.register(UserRoutes);
 
 app.listen({ port: 3000, host: '0.0.0.0' }, (err, address) => {
 	if (err) {
