@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { hash, verify } from 'argon2';
-import { SignJWT, JWTPayload } from 'jose';
+import { SignJWT, JWTPayload, jwtVerify } from 'jose';
 
 export function generateId(): string {
 	return randomUUID();
@@ -33,4 +33,13 @@ export async function generateToken(payload: Payload) {
 		.sign(secret);
 
 	return token;
+}
+
+export async function validateToken(token: string): Promise<Payload | null> {
+	try {
+		const result = await jwtVerify(token, secret);
+		return result.payload as Payload;
+	} catch {
+		return null;
+	}
 }

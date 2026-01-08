@@ -1,8 +1,9 @@
 import { app } from '@/src/server';
 import { router } from '@/src/_infra/http/router';
 import { UserFactories } from '../user-factories';
+import { Auth } from '@/src/_infra/http/middlewares/auth';
 
 export function UserRoutes() {
 	app.post('/users/register', router(UserFactories.createUser()));
-	app.post('/me', router(UserFactories.getUserProfile()));
+	app.post('/me', { preHandler: Auth }, router(UserFactories.getUserProfile()));
 }
