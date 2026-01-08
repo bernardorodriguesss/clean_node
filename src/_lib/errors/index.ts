@@ -8,7 +8,10 @@ export class BaseError extends Error {
 }
 
 export class BadRequest extends BaseError {
-	constructor(message: string) {
+	constructor(
+		private errors: unknown,
+		message: string = 'Bad Request',
+	) {
 		super(400, message);
 	}
 }

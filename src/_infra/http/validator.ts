@@ -22,7 +22,12 @@ export function validateData<S extends Schemas>(schemas: S) {
 			const result = schema.safeParse(request[key]);
 
 			if (!result.success) {
-				return failure(new BadRequest('Bad Request'));
+				const errors = result.error.issues.map((issue) => ({
+					path: issue.path.join('.'),
+					code: issue.code,
+					message: issue.message,
+				}));
+				return failure(new BadRequest(errors));
 			}
 
 			return success(result.data);
