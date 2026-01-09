@@ -2,7 +2,7 @@ import { sql, type Kysely } from 'kysely';
 
 export async function up(db: Kysely<any>): Promise<void> {
 	await sql`
-		CREATE TYPE user_role AS ENUM ('ADMIN', 'USER');
+		CREATE TYPE user_role AS ENUM ('admin', 'user');
 	`.execute(db);
 
 	await sql`
