@@ -1,6 +1,6 @@
 import fastify from 'fastify';
 import swagger from '@fastify/swagger';
-import openapi from '../_docs/openapi';
+import openapi from '../docs/openapi';
 
 import { AuthRoutes } from './auth/interface/auth-routes';
 import { UserRoutes } from './user/interface/user-routes';
