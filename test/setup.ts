@@ -5,6 +5,10 @@ import { app } from '@/src/server';
 
 beforeAll(async () => {
 	await app.ready();
+});
+
+afterAll(async () => {
+	await app.close();
 	await sql`
 	    DO
 	    $$
@@ -20,8 +24,4 @@ beforeAll(async () => {
 	    END;
 	    $$;
 	`.execute(db);
-});
-
-afterAll(async () => {
-	await app.close();
 });

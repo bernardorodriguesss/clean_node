@@ -9,7 +9,7 @@
 		"migrate:down": "npx kysely migrate:down",
 		"test": "dotenv -e .env vitest",
 		"test:unit": "npm run test --project unit",
-		"test:integration": "npm run test --project integration"
+		"test:integration": "npm run seed:up && npm run test --project integration"
 	},
 	"keywords": [],
 	"author": "",
