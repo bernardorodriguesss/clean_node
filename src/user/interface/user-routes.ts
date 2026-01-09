@@ -5,5 +5,9 @@ import { Auth } from '@/src/_infra/http/middlewares/auth';
 
 export function UserRoutes() {
 	app.post('/users/register', router(UserFactories.createUser()));
-	app.post('/me', { preHandler: Auth }, router(UserFactories.getUserProfile()));
+	app.get(
+		'/users/me',
+		{ preHandler: Auth },
+		router(UserFactories.getUserProfile()),
+	);
 }
