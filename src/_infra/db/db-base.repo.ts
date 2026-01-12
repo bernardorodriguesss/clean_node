@@ -31,4 +31,26 @@ export abstract class BaseDbRepository<
 
 		return result as TModel;
 	}
+
+	async findMany(
+		offset: number,
+		limit: number,
+	): Promise<{ data: TModel[]; total: number }> {
+		const data = await this.database
+			.selectFrom(this.table)
+			.selectAll()
+			.offset(offset)
+			.limit(limit)
+			.execute();
+
+		const count = await this.database
+			.selectFrom(this.table)
+			.select(({ fn }) => fn.countAll<number>().as('total'))
+			.executeTakeFirst();
+
+		return {
+			data: data.map((item) => item as TModel),
+			total: count?.total ?? 0,
+		};
+	}
 }

@@ -15,6 +15,17 @@ export class FakeUserRepository implements IUserRepository {
 		return user ?? null;
 	}
 
+	async findMany(
+		offset: number,
+		limit: number,
+	): Promise<{ data: User[]; total: number }> {
+		const users = this.users.slice(offset, offset + limit);
+		return {
+			data: users,
+			total: this.users.length,
+		};
+	}
+
 	async findUserByEmail(email: string): Promise<User | null> {
 		const user = this.users.find((user) => user.email === email);
 		return user ?? null;
