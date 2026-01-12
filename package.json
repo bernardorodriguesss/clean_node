@@ -4,12 +4,14 @@
 	"main": "index.js",
 	"scripts": {
 		"dev": "dotenv -e .env tsx watch src/server.ts",
+
 		"seed:up": "npx kysely seed:run",
 		"migrate:up": "npx kysely migrate:latest",
 		"migrate:down": "npx kysely migrate:down",
-		"test": "dotenv -e .env vitest",
+
+		"test": "dotenv -e .env.test vitest",
 		"test:unit": "npm run test --project unit",
-		"test:integration": "npm run seed:up && npm run test --project integration"
+		"test:integration": "npm run test --project integration"
 	},
 	"keywords": [],
 	"author": "",

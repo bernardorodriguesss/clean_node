@@ -18,8 +18,7 @@ export default defineConfig({
 				test: {
 					name: 'integration',
 					include: ['test/**/integration/**/*.spec.ts'],
-					setupFiles: ['test/setup.ts'],
-					isolate: true,
+					setupFiles: 'test/setup.ts',
 				},
 			},
 		],
