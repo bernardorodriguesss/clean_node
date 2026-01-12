@@ -1,6 +1,6 @@
 import { Controller } from '@/src/_lib/protocols/controller';
 import { validateData } from '@/src/_infra/http/validator';
-import { IHttpContext } from '@/src/_infra/http/context';
+import { IHttpContext } from '@/src/_infra/http/adapters/context';
 
 import { createUserSchema } from '../../business/dto/user.dto';
 import { CreateUserUseCase } from '../../business/usecases/create-user.case';
@@ -9,7 +9,7 @@ import {
 	conflict,
 	created,
 	serverError,
-} from '@/src/_infra/http/helpers';
+} from '@/src/_infra/http/responses';
 
 const { body } = validateData({
 	body: createUserSchema,

@@ -1,6 +1,6 @@
 import { Controller } from '@/src/_lib/protocols/controller';
 import { validateData } from '@/src/_infra/http/validator';
-import { IHttpContext } from '@/src/_infra/http/context';
+import { IHttpContext } from '@/src/_infra/http/adapters/context';
 
 import { signInSchema } from '../../business/dto/sign-in.dto';
 import { SignInUseCase } from '../../business/usecases/sign-in.case';
@@ -9,7 +9,7 @@ import {
 	badRequest,
 	serverError,
 	unauthorized,
-} from '@/src/_infra/http/helpers';
+} from '@/src/_infra/http/responses';
 
 const { body } = validateData({
 	body: signInSchema,

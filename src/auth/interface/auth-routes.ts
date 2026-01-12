@@ -1,7 +1,7 @@
 import { app } from '@/src/app';
-import { router } from '@/src/_infra/http/router';
+import { routeAdapter } from '@/src/_infra/http/adapters/router';
 import { AuthFactories } from '../auth-factories';
 
 export function AuthRoutes() {
-	app.post('/auth/sign-in', router(AuthFactories.signIn()));
+	app.post('/auth/sign-in', routeAdapter(AuthFactories.signIn()));
 }

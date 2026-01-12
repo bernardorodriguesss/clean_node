@@ -1,7 +1,7 @@
 import { validateToken } from '@/src/_lib/functions/secure';
 import { FastifyReply, FastifyRequest } from 'fastify';
 
-export async function Auth(req: FastifyRequest, res: FastifyReply) {
+export async function auth(req: FastifyRequest, res: FastifyReply) {
 	const authHeader = req.headers.authorization;
 
 	if (!authHeader) {

@@ -1,5 +1,5 @@
 import { BaseError } from '@/src/_lib/errors';
-import { IHttpContext } from './context';
+import { IHttpContext } from './adapters/context';
 
 export function created<T>(ctx: IHttpContext, data: T) {
 	ctx.send(201, {
@@ -27,6 +27,6 @@ export function unauthorized(ctx: IHttpContext, error: BaseError) {
 	ctx.send(error.status, { message: error.message });
 }
 
-export function serverError(ctx: IHttpContext) {
+export function serverError(ctx: IHttpContext, err?: unknown) {
 	ctx.send(500, { error: 'Internal Server Error' });
 }
