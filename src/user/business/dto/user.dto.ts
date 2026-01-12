@@ -14,5 +14,14 @@ const userResponseSchema = userSchema.pick({
 	email: true,
 });
 
+const fetchUsersResponseSchema = z.object({
+	users: z.array(userResponseSchema),
+	total: z.number().int(),
+	limit: z.number().int(),
+	page: z.number().int(),
+	totalPages: z.number().int(),
+});
+
 export type CreateUserDTO = z.input<typeof createUserSchema>;
 export type UserResponseDTO = z.output<typeof userResponseSchema>;
+export type FetchUsersResponseDTO = z.output<typeof fetchUsersResponseSchema>;
