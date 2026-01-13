@@ -5,9 +5,9 @@
 	"scripts": {
 		"dev": "dotenv -e .env tsx watch src/server.ts",
 
-		"seed:up": "npx kysely seed:run",
 		"migrate:up": "npx kysely migrate:latest",
 		"migrate:down": "npx kysely migrate:down",
+		"migrate:up:test": "dotenv -e .env.test npx kysely migrate:latest",
 
 		"test": "dotenv -e .env.test vitest",
 		"test:unit": "npm run test --project unit",

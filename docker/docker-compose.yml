@@ -1,0 +1,27 @@
+services:
+  postgres:
+    container_name: pg_container
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: 'clean_node'
+      POSTGRES_USER: 'docker'
+      POSTGRES_PASSWORD: 'docker'
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    ports: 
+      - 8080:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'admin@email.com'
+      PGADMIN_DEFAULT_PASSWORD: 'admin'
+    depends_on:
+      - postgres
+
+volumes:
+  pg_data:
+    
