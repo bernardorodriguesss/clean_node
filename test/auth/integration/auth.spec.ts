@@ -15,12 +15,8 @@ describe('auth integration tests', () => {
 			password_hash: await hashPassword('default'),
 		});
 		userId = user.id;
-		await db
-			.deleteFrom('users')
-			.execute()
-			.then(() => {
-				db.insertInto('users').values(user).execute();
-			});
+		await db.deleteFrom('users').execute();
+		await db.insertInto('users').values(user).execute();
 	});
 
 	afterEach(async () => {
