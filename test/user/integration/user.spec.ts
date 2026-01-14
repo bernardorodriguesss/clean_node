@@ -28,7 +28,10 @@ describe('user controller', () => {
 				password: 'newuser',
 			};
 
-			await request(app.server).post('/users/register').send(data).expect(201);
+			await request(app.server)
+				.post('/api/v1/users/register')
+				.send(data)
+				.expect(201);
 			const result = await db
 				.selectFrom('users')
 				.where('email', '=', data.email)
@@ -44,13 +47,13 @@ describe('user controller', () => {
 				const token = await generateToken({ id: userId, role: 'user' });
 
 				await request(app.server)
-					.get('/users/me')
+					.get('/api/v1/users/me')
 					.set('Authorization', `Bearer ${token}`)
 					.expect(200);
 			});
 
 			it('should return 401 when no authentication token is provided', async () => {
-				await request(app.server).get('/users/me').expect(401);
+				await request(app.server).get('/api/v1/users/me').expect(401);
 			});
 		});
 
@@ -58,7 +61,7 @@ describe('user controller', () => {
 			it('should allow an admin to fetch the list of users', async () => {
 				const token = await generateToken({ id: userId, role: 'admin' });
 				await request(app.server)
-					.get('/users')
+					.get('/api/v1/users')
 					.set('Authorization', `Bearer ${token}`)
 					.expect(200);
 			});
@@ -66,7 +69,7 @@ describe('user controller', () => {
 			it('should forbid non-admin users from fetching the list of users', async () => {
 				const token = await generateToken({ id: userId, role: 'user' });
 				await request(app.server)
-					.get('/users')
+					.get('/api/v1/users')
 					.set('Authorization', `Bearer ${token}`)
 					.expect(403);
 			});

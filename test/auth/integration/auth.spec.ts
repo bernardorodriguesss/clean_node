@@ -30,7 +30,10 @@ describe('auth integration tests', () => {
 				password: 'default',
 			};
 
-			await request(app.server).post('/auth/sign-in').send(data).expect(200);
+			await request(app.server)
+				.post('/api/v1/auth/sign-in')
+				.send(data)
+				.expect(200);
 		});
 	});
 });

@@ -3,5 +3,7 @@ import { routeAdapter } from '@/src/_infra/http/adapters/router';
 import { AuthFactories } from '../auth-factories';
 
 export function AuthRoutes() {
-	app.post('/auth/sign-in', routeAdapter(AuthFactories.signIn()));
+	const prefix = '/api/v1';
+
+	app.post(`${prefix}/auth/sign-in`, routeAdapter(AuthFactories.signIn()));
 }
