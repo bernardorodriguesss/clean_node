@@ -5,7 +5,7 @@ import { IHttpContext } from '@/src/_infra/http/adapters/context';
 import { createUserSchema } from '../../business/dto/user.dto';
 import { CreateUserUseCase } from '../../business/usecases/create-user.case';
 import {
-	badRequest,
+	validationError,
 	conflict,
 	created,
 	serverError,
@@ -22,20 +22,19 @@ export class CreateUserController implements Controller {
 		const validation = body(ctx.request());
 
 		if (validation.isFailure()) {
-			return badRequest(ctx, validation.error);
+			return validationError(ctx, validation.error);
 		}
 
-		const result = await this.createUserUseCase.execute(validation.value);
+		try {
+			const result = await this.createUserUseCase.execute(validation.value);
 
-		if (result.isFailure()) {
-			switch (result.error.status) {
-				case 409:
-					return conflict(ctx, result.error);
-				default:
-					return serverError(ctx);
+			if (result.isFailure()) {
+				return conflict(ctx, result.error);
 			}
-		}
 
-		return created(ctx, result.value);
+			return created(ctx, result.value);
+		} catch (err) {
+			return serverError(ctx);
+		}
 	}
 }

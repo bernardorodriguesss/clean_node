@@ -4,7 +4,7 @@ import { IHttpContext } from '@/src/_infra/http/adapters/context';
 
 import { paginationSchema } from '@/src/_lib/schemas';
 import { FetchUsersUseCase } from '../../business/usecases';
-import { badRequest, ok, serverError } from '@/src/_infra/http/responses';
+import { validationError, ok, serverError } from '@/src/_infra/http/responses';
 
 const { query } = validateData({
 	query: paginationSchema,
@@ -17,7 +17,7 @@ export class FetchUsersController implements Controller {
 		const validation = query(ctx.request());
 
 		if (validation.isFailure()) {
-			return badRequest(ctx, validation.error);
+			return validationError(ctx, validation.error);
 		}
 
 		try {

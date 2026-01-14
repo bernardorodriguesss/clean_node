@@ -7,10 +7,10 @@ export class BaseError extends Error {
 	}
 }
 
-export class BadRequest extends BaseError {
+export class ValidationError extends BaseError {
 	constructor(
-		private errors: unknown,
-		message: string = 'Bad Request',
+		readonly errors: unknown,
+		message: string = 'Invalid request data',
 	) {
 		super(400, message);
 	}

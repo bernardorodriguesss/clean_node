@@ -16,7 +16,7 @@ export class CreateUserUseCase implements UseCase<CreateUserDTO, Response> {
 		const userExists = await this.repository.findUserByEmail(input.email);
 
 		if (userExists) {
-			return failure(new Conflict('Email taken'));
+			return failure(new Conflict('The email address is already in use'));
 		}
 
 		const userId = generateId();

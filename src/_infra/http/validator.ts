@@ -1,7 +1,8 @@
 import { ZodType, z } from 'zod';
-import { IRequest } from './context';
+
+import { IRequest } from './adapters/context';
+import { ValidationError } from '@/src/_lib/errors';
 import { Either, failure, success } from '@/src/_lib/either';
-import { BadRequest } from '@/src/_lib/errors';
 
 interface Schemas {
 	body?: ZodType<any>;
@@ -10,7 +11,7 @@ interface Schemas {
 	headers?: ZodType<any>;
 }
 
-type Response<T> = Either<BadRequest, z.infer<T>>;
+type Response<T> = Either<ValidationError, z.infer<T>>;
 
 export function validateData<S extends Schemas>(schemas: S) {
 	const validator =
@@ -27,7 +28,7 @@ export function validateData<S extends Schemas>(schemas: S) {
 					code: issue.code,
 					message: issue.message,
 				}));
-				return failure(new BadRequest(errors));
+				return failure(new ValidationError(errors));
 			}
 
 			return success(result.data);

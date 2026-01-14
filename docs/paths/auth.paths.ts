@@ -17,6 +17,14 @@ api.registerPath({
 			description: 'user authenticated',
 			content: { 'application/json': { schema: signInResponseSchema } },
 		},
+		401: {
+			description: 'invalid credentials',
+			content: {
+				'application/json': {
+					schema: { $ref: '#/components/schemas/DefaultError' },
+				},
+			},
+		},
 	},
 	servers: [{ url: '/api/v1' }],
 	security: [],

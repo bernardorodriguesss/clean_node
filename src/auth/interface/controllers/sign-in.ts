@@ -6,7 +6,7 @@ import { signInSchema } from '../../business/dto/sign-in.dto';
 import { SignInUseCase } from '../../business/usecases/sign-in.case';
 import {
 	ok,
-	badRequest,
+	validationError,
 	serverError,
 	unauthorized,
 } from '@/src/_infra/http/responses';
@@ -22,22 +22,19 @@ export class SignInController implements Controller {
 		const validation = body(ctx.request());
 
 		if (validation.isFailure()) {
-			return badRequest(ctx, validation.error);
+			return validationError(ctx, validation.error);
 		}
 
-		const result = await this.signInUseCase.execute(validation.value);
+		try {
+			const result = await this.signInUseCase.execute(validation.value);
 
-		if (result.isFailure()) {
-			switch (result.error.status) {
-				case 401: {
-					return unauthorized(ctx, result.error);
-				}
-				default: {
-					return serverError(ctx);
-				}
+			if (result.isFailure()) {
+				return unauthorized(ctx, result.error);
 			}
-		}
 
-		return ok(ctx, result.value);
+			return ok(ctx, result.value);
+		} catch (err) {
+			return serverError(ctx, err);
+		}
 	}
 }
