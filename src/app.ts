@@ -1,6 +1,6 @@
 import fastify from 'fastify';
 import swagger from '@fastify/swagger';
-import openapi from '../docs/openapi';
+import openapi from '../docs';
 
 import { AuthRoutes } from './auth/interface/auth-routes';
 import { UserRoutes } from './user/interface/user-routes';
@@ -20,15 +20,14 @@ export const app = fastify({
 // Swagger configuration
 app.register(swagger, {
 	mode: 'static',
-	specification: {
-		document: openapi,
-	},
+	specification: { document: openapi },
 });
 
 app.register(import('@scalar/fastify-api-reference'), {
 	routePrefix: '/docs',
 	configuration: {
 		theme: 'elysiajs',
+		layout: 'classic',
 	},
 });
 

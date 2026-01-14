@@ -8,13 +8,13 @@ export const createUserSchema = userSchema
 	})
 	.extend({ password: z.string().min(6) });
 
-const userResponseSchema = userSchema.pick({
+export const userResponseSchema = userSchema.pick({
 	id: true,
 	name: true,
 	email: true,
 });
 
-const fetchUsersResponseSchema = z.object({
+export const fetchUsersResponseSchema = z.object({
 	users: z.array(userResponseSchema),
 	total: z.number().int(),
 	limit: z.number().int(),
