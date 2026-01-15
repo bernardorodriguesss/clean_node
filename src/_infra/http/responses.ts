@@ -1,16 +1,20 @@
 import { IHttpContext } from './adapters/context';
 import { BaseError, ValidationError } from '@/src/_lib/errors';
 
+export function ok<T>(ctx: IHttpContext, data: T) {
+	ctx.send(200, {
+		data: data,
+	});
+}
+
 export function created<T>(ctx: IHttpContext, data: T) {
 	ctx.send(201, {
 		data: data,
 	});
 }
 
-export function ok<T>(ctx: IHttpContext, data: T) {
-	ctx.send(200, {
-		data: data,
-	});
+export function noContent(ctx: IHttpContext) {
+	ctx.send(204, null);
 }
 
 export function validationError(ctx: IHttpContext, error: ValidationError) {
@@ -24,6 +28,14 @@ export function validationError(ctx: IHttpContext, error: ValidationError) {
 export function unauthorized(ctx: IHttpContext, error: BaseError | string) {
 	const message = error instanceof BaseError ? error.message : error;
 	ctx.send(401, { message: message });
+}
+
+export function forbidden(ctx: IHttpContext, error: BaseError) {
+	ctx.send(403, { message: error.message });
+}
+
+export function notFound(ctx: IHttpContext, error: BaseError) {
+	ctx.send(404, { message: error.message });
 }
 
 export function conflict(ctx: IHttpContext, error: BaseError) {

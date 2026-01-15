@@ -30,4 +30,10 @@ export class FakeUserRepository implements IUserRepository {
 		const user = this.users.find((user) => user.email === email);
 		return user ?? null;
 	}
+
+	async delete(id: string): Promise<boolean> {
+		const usersTotal = this.users.length;
+		this.users = this.users.filter((user) => user.id !== id);
+		return this.users.length < usersTotal;
+	}
 }

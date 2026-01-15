@@ -5,4 +5,5 @@ export interface Repository<TModel> {
 		offset: number,
 		limit: number,
 	): Promise<{ data: TModel[]; total: number }>;
+	delete(id: string): Promise<boolean>;
 }

@@ -22,6 +22,12 @@ export class Unauthorized extends BaseError {
 	}
 }
 
+export class Forbidden extends BaseError {
+	constructor(message: string) {
+		super(403, message);
+	}
+}
+
 export class NotFound extends BaseError {
 	constructor(message: string) {
 		super(404, message);
