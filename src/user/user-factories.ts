@@ -1,11 +1,13 @@
 import { UserRepository } from './repos/user.repo';
 import {
 	CreateUserUseCase,
+	DeleteUserUseCase,
 	FetchUsersUseCase,
 	GetUserUseCase,
 } from './business/usecases';
 import {
 	CreateUserController,
+	DeleteUserController,
 	FetchUsersController,
 	GetUserProfileController,
 } from './interface/controllers';
@@ -26,5 +28,10 @@ export class UserFactories {
 	static getUserProfile() {
 		const usecase = new GetUserUseCase(this.repository);
 		return new GetUserProfileController(usecase);
+	}
+
+	static deleteUser() {
+		const usecase = new DeleteUserUseCase(this.repository);
+		return new DeleteUserController(usecase);
 	}
 }

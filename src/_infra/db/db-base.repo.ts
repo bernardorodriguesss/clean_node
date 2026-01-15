@@ -53,4 +53,13 @@ export abstract class BaseDbRepository<
 			total: count?.total ?? 0,
 		};
 	}
+
+	async delete(id: string): Promise<boolean> {
+		const result = await this.database
+			.deleteFrom(this.table)
+			.where('id', '=', id)
+			.executeTakeFirst();
+
+		return result.numDeletedRows > 0;
+	}
 }

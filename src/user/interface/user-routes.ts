@@ -22,4 +22,9 @@ export function UserRoutes() {
 		{ preHandler: auth },
 		routeAdapter(UserFactories.getUserProfile()),
 	);
+	app.delete(
+		`${prefix}/users/:id`,
+		{ preHandler: auth },
+		routeAdapter(UserFactories.deleteUser()),
+	);
 }

@@ -75,4 +75,25 @@ describe('user controller', () => {
 			});
 		});
 	});
+
+	describe('DELETE /users', () => {
+		it('should delete a user and return 204', async () => {
+			const token = await generateToken({ id: '1', role: 'admin' });
+
+			const response = await request(app.server)
+				.delete(`/api/v1/users/${userId}`)
+				.set('Authorization', `Bearer ${token}`)
+				.expect(204);
+
+			expect(response.body).toEqual({});
+
+			const result = await db
+				.selectFrom('users')
+				.selectAll()
+				.where('id', '=', userId)
+				.executeTakeFirst();
+
+			expect(result).toBe(undefined);
+		});
+	});
 });

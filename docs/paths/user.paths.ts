@@ -84,3 +84,34 @@ api.registerPath({
 	},
 	servers: [{ url: '/api/v1' }],
 });
+
+api.registerPath({
+	path: '/users/:id',
+	tags: ['users'],
+	method: 'delete',
+	summary: 'delete user',
+	responses: {
+		204: {
+			description: 'user deleted, no content is returned',
+			// content: { 'application/json': { schema: userResponseSchema } },
+		},
+		403: {
+			description:
+				'forbidden, returned when a non-admin user attempts to delete another user’s account.',
+			content: {
+				'application/json': {
+					schema: { $ref: '#/components/schemas/DefaultError' },
+				},
+			},
+		},
+		404: {
+			description: 'user not found',
+			content: {
+				'application/json': {
+					schema: { $ref: '#/components/schemas/DefaultError' },
+				},
+			},
+		},
+	},
+	servers: [{ url: '/api/v1' }],
+});
