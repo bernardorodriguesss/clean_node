@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { userSchema } from '../../domain/user';
+import { UserRole, userSchema } from '../../domain/user';
 
 export const createUserSchema = userSchema
 	.pick({
@@ -11,6 +11,7 @@ export const createUserSchema = userSchema
 export const userResponseSchema = userSchema.pick({
 	id: true,
 	name: true,
+	role: true,
 	email: true,
 });
 

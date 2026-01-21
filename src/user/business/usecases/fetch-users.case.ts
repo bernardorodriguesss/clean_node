@@ -15,7 +15,12 @@ export class FetchUsersUseCase implements UseCase<Pagination, Response> {
 		const { data, total } = await this.repository.findMany(offset, limit);
 
 		return success({
-			users: data.map(({ id, name, email }) => ({ id, name, email })),
+			users: data.map(({ id, name, role, email }) => ({
+				id,
+				name,
+				role,
+				email,
+			})),
 			page: page,
 			limit: limit,
 			total: total,

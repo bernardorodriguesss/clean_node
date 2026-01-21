@@ -33,6 +33,7 @@ export class CreateUserUseCase implements UseCase<CreateUserDTO, Response> {
 		return success({
 			id: user.id,
 			name: user.name,
+			role: user.role,
 			email: user.email,
 		});
 	}

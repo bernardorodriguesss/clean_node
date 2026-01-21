@@ -21,6 +21,7 @@ export class GetUserUseCase implements UseCase<ModelId, Response> {
 		return success({
 			id: user.id,
 			name: user.name,
+			role: user.role,
 			email: user.email,
 		});
 	}
