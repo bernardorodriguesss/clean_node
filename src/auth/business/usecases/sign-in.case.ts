@@ -29,6 +29,12 @@ export class SignInUseCase implements UseCase<SignInDTO, Response> {
 
 		return success({
 			accessToken: await generateToken({ id: user.id, role: user.role }),
+			user: {
+				id: user.id,
+				name: user.name,
+				role: user.role,
+				email: user.email,
+			},
 		});
 	}
 }

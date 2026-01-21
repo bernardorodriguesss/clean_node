@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { userResponseSchema } from '@/src/user/business/dto/user.dto';
 
 export const signInSchema = z.object({
 	email: z.email(),
@@ -7,6 +8,7 @@ export const signInSchema = z.object({
 
 export const signInResponseSchema = z.object({
 	accessToken: z.string(),
+	user: userResponseSchema,
 });
 
 export type SignInDTO = z.infer<typeof signInSchema>;
