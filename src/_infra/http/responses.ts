@@ -2,15 +2,11 @@ import { IHttpContext } from './adapters/context';
 import { BaseError, ValidationError } from '@/src/_lib/errors';
 
 export function ok<T>(ctx: IHttpContext, data: T) {
-	ctx.send(200, {
-		data: data,
-	});
+	ctx.send(200, data);
 }
 
 export function created<T>(ctx: IHttpContext, data: T) {
-	ctx.send(201, {
-		data: data,
-	});
+	ctx.send(201, data);
 }
 
 export function noContent(ctx: IHttpContext) {
