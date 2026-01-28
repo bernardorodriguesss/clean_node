@@ -2,6 +2,7 @@ import fastify from 'fastify';
 import swagger from '@fastify/swagger';
 import openapi from '../docs';
 
+import cors from '@fastify/cors';
 import { AuthRoutes } from './auth/interface/auth-routes';
 import { UserRoutes } from './user/interface/user-routes';
 
@@ -15,6 +16,10 @@ export const app = fastify({
 					},
 				}
 			: false,
+});
+
+app.register(cors, {
+	origin: '*',
 });
 
 // Swagger configuration
