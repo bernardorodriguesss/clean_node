@@ -16,7 +16,7 @@ describe('FetchUsersUseCase', () => {
 	});
 
 	it('should be able to fetch all users when no pagination is provided', async () => {
-		const result = await sut.execute();
+		const result = await sut.execute({ page: 1, limit: 10 });
 		expect(result.isSuccess()).toBe(true);
 		if (result.isSuccess()) {
 			expect(result.value.users.length).toBe(2);

@@ -10,7 +10,7 @@ type Response = Either<never, FetchUsersResponseDTO>;
 export class FetchUsersUseCase implements UseCase<Pagination, Response> {
 	constructor(private repository: IUserRepository) {}
 
-	async execute({ page = 1, limit = 10 }: Pagination = {}): Promise<Response> {
+	async execute({ page, limit }: Pagination): Promise<Response> {
 		const offset = (page - 1) * limit;
 		const { data, total } = await this.repository.findMany(offset, limit);
 
