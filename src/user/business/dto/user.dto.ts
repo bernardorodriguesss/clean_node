@@ -1,19 +1,24 @@
 import { z } from 'zod';
-import { UserRole, userSchema } from '../../domain/user';
+import { userSchema } from '../../domain/user';
 
 export const createUserSchema = userSchema
 	.pick({
 		name: true,
+		role: true,
 		email: true,
 	})
 	.extend({ password: z.string().min(6) });
 
-export const userResponseSchema = userSchema.pick({
-	id: true,
-	name: true,
-	role: true,
-	email: true,
-});
+export const userResponseSchema = userSchema
+	.pick({
+		id: true,
+		name: true,
+		role: true,
+		email: true,
+	})
+	.openapi({
+		required: [],
+	});
 
 export const fetchUsersResponseSchema = z.object({
 	users: z.array(userResponseSchema),

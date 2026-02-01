@@ -14,12 +14,19 @@ export const bearerAuth = api.registerComponent(
 	},
 );
 
-api.register('DefaultError', z.object({ message: z.string() }));
+api.register(
+	'DefaultError',
+	z.object({ message: z.string() }).openapi({ required: [] }),
+);
 
 api.register(
 	'ValidationError',
-	z.object({
-		errors: z.array(z.any()),
-		message: z.string(),
-	}),
+	z
+		.object({
+			errors: z.array(z.any()).optional(),
+			message: z.string().optional(),
+		})
+		.openapi({
+			required: [],
+		}),
 );

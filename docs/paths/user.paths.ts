@@ -1,117 +1,104 @@
-import { api } from '../utils/api';
+import { paginationSchema } from '@/src/_lib/schemas';
+import { registerApiPath } from '../utils/helpers';
 import {
 	createUserSchema,
 	userResponseSchema,
-	fetchUsersResponseSchema,
 } from '@/src/user/business/dto/user.dto';
 
-api.registerPath({
-	path: '/users/register',
-	tags: ['users'],
+/**
+ * Create user path
+ */
+registerApiPath({
+	path: '/users',
 	method: 'post',
-	summary: 'create new user',
+	tags: ['users'],
 	request: {
-		body: { content: { 'application/json': { schema: createUserSchema } } },
+		body: createUserSchema,
 	},
 	responses: {
-		201: {
-			description: 'user created',
-			content: { 'application/json': { schema: userResponseSchema } },
-		},
+		201: { description: 'user created', content: userResponseSchema },
 		400: {
 			description: 'invalid data',
-			content: {
-				'application/json': {
-					schema: { $ref: '#/components/schemas/ValidationError' },
-				},
-			},
-		},
-		409: {
-			description: 'email conflict',
-			content: {
-				'application/json': {
-					schema: { $ref: '#/components/schemas/DefaultError' },
-				},
-			},
-		},
-	},
-	servers: [{ url: '/api/v1' }],
-	security: [],
-});
-
-api.registerPath({
-	path: '/users',
-	tags: ['users'],
-	method: 'get',
-	summary: 'fetch users',
-	responses: {
-		200: {
-			description: 'returns a list of users',
-			content: {
-				'application/json': { schema: fetchUsersResponseSchema },
-			},
-		},
-		403: {
-			description: 'user does not have permission to access this resource',
-			content: {
-				'application/json': {
-					schema: { $ref: '#/components/schemas/DefaultError' },
-				},
-			},
-		},
-	},
-	servers: [{ url: '/api/v1' }],
-});
-
-api.registerPath({
-	path: '/users/me',
-	tags: ['users'],
-	method: 'get',
-	summary: 'get profile',
-	responses: {
-		200: {
-			description: 'returns the profile of authenticated user',
-			content: { 'application/json': { schema: userResponseSchema } },
+			content: { $ref: '#/components/schemas/ValidationError' },
 		},
 		401: {
-			description: 'user not authenticated',
-			content: {
-				'application/json': {
-					schema: { $ref: '#/components/schemas/DefaultError' },
-				},
-			},
-		},
-	},
-	servers: [{ url: '/api/v1' }],
-});
-
-api.registerPath({
-	path: '/users/:id',
-	tags: ['users'],
-	method: 'delete',
-	summary: 'delete user',
-	responses: {
-		204: {
-			description: 'user deleted, no content is returned',
-			// content: { 'application/json': { schema: userResponseSchema } },
+			description: 'authentication required',
+			content: { $ref: '#/components/schemas/ValidationError' },
 		},
 		403: {
-			description:
-				'forbidden, returned when a non-admin user attempts to delete another user’s account.',
-			content: {
-				'application/json': {
-					schema: { $ref: '#/components/schemas/DefaultError' },
-				},
-			},
+			description: 'no permission',
+			content: { $ref: '#/components/schemas/DefaultError' },
 		},
-		404: {
-			description: 'user not found',
-			content: {
-				'application/json': {
-					schema: { $ref: '#/components/schemas/DefaultError' },
-				},
-			},
+		409: {
+			description: 'email in use',
+			content: { $ref: '#/components/schemas/DefaultError' },
 		},
 	},
-	servers: [{ url: '/api/v1' }],
+});
+
+/**
+ * Get user profile
+ */
+registerApiPath({
+	path: '/users/me',
+	method: 'get',
+	tags: ['users'],
+	responses: {
+		200: { description: 'user found', content: userResponseSchema },
+		401: {
+			description: 'authentication required',
+			content: { $ref: '#/components/schemas/DefaultError' },
+		},
+		404: {
+			description: 'not found',
+			content: { $ref: '#/components/schemas/DefaultError' },
+		},
+	},
+});
+
+/**
+ * Fetch users path
+ */
+registerApiPath({
+	path: '/users',
+	method: 'get',
+	tags: ['users'],
+	request: {
+		query: paginationSchema,
+	},
+	responses: {
+		200: { description: '', content: userResponseSchema },
+		401: {
+			description: 'authentication required',
+			content: { $ref: '#/components/schemas/DefaultError' },
+		},
+		403: {
+			description: 'no permission',
+			content: { $ref: '#/components/schemas/DefaultError' },
+		},
+	},
+});
+
+/**
+ * Delete user path
+ */
+registerApiPath({
+	path: '/users/:id',
+	method: 'delete',
+	tags: ['users'],
+	responses: {
+		204: { description: 'No content', content: userResponseSchema },
+		401: {
+			description: 'authentication required',
+			content: { $ref: '#/components/schemas/DefaultError' },
+		},
+		403: {
+			description: 'no permission',
+			content: { $ref: '#/components/schemas/DefaultError' },
+		},
+		404: {
+			description: 'not found',
+			content: { $ref: '#/components/schemas/DefaultError' },
+		},
+	},
 });

@@ -9,7 +9,8 @@ export function UserRoutes() {
 	const prefix = '/api/v1';
 
 	app.post(
-		`${prefix}/users/register`,
+		`${prefix}/users`,
+		{ preHandler: [auth, permission(['admin'])] },
 		routeAdapter(UserFactories.createUser()),
 	);
 	app.get(

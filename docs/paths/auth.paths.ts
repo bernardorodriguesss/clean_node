@@ -1,31 +1,25 @@
-import { api } from '../utils/api';
+import { registerApiPath } from '../utils/helpers';
 import {
 	signInSchema,
 	signInResponseSchema,
 } from '@/src/auth/business/dto/sign-in.dto';
 
-api.registerPath({
+/**
+ * Sign-in path
+ */
+registerApiPath({
 	path: '/auth/sign-in',
-	tags: ['auth'],
 	method: 'post',
-	summary: 'authenticate user',
+	tags: ['auth'],
 	request: {
-		body: { content: { 'application/json': { schema: signInSchema } } },
+		body: signInSchema,
 	},
 	responses: {
-		200: {
-			description: 'user authenticated',
-			content: { 'application/json': { schema: signInResponseSchema } },
-		},
+		200: { description: 'authenticated', content: signInResponseSchema },
 		401: {
 			description: 'invalid credentials',
-			content: {
-				'application/json': {
-					schema: { $ref: '#/components/schemas/DefaultError' },
-				},
-			},
+			content: { $ref: '#/components/schemas/ValidationError' },
 		},
 	},
-	servers: [{ url: '/api/v1' }],
-	security: [],
+	auth: false,
 });

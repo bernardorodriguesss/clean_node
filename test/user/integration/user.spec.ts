@@ -21,23 +21,35 @@ describe('user controller', () => {
 	});
 
 	describe('POST /users', () => {
-		it('should create a new user and return 201 when valid data is provided', async () => {
-			const data = {
-				name: 'newuser',
-				email: 'newuser@email.com',
-				password: 'newuser',
-			};
+		const data = {
+			name: 'created_user',
+			email: 'createduser@email.com',
+			password: 'created_user',
+			role: 'user',
+		};
+
+		it('should return 201 when admin creates a user', async () => {
+			const token = await generateToken({ id: userId, role: 'admin' });
 
 			await request(app.server)
-				.post('/api/v1/users/register')
+				.post('/api/v1/users')
+				.set('Authorization', `Bearer ${token}`)
 				.send(data)
 				.expect(201);
-			const result = await db
-				.selectFrom('users')
-				.where('email', '=', data.email)
-				.executeTakeFirst();
+		});
 
-			expect(result).not.toBe(null);
+		it('should return 401 when no authentication token is provided', async () => {
+			await request(app.server).post('/api/v1/users').send(data).expect(401);
+		});
+
+		it('should return 403 when a non-admin tries to create a user', async () => {
+			const token = await generateToken({ id: userId, role: 'user' });
+
+			await request(app.server)
+				.post('/api/v1/users')
+				.set('Authorization', `Bearer ${token}`)
+				.send(data)
+				.expect(403);
 		});
 	});
 
